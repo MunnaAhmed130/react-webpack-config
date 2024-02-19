@@ -12,10 +12,8 @@ const App = () => {
           <h1>React</h1>
         </section>
 
-        {/*
-        <img src={sword} alt="sword png" width="250" /> 
-        <img src={swordSvg} alt="sword svg" width="250" /> 
-        */}
+        <img src={sword} alt="sword png" width="250" />
+        <img src={swordSvg} alt="sword svg" width="250" />
 
         <Recipes />
       </main>
