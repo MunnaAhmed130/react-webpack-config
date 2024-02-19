@@ -1,11 +1,24 @@
 const path = require("path");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 require("dotenv").config();
 
 let mode = "development";
+
+const babelPlugins = [];
+const webpackPlugins = [
+  new MiniCssExtractPlugin(),
+  new HtmlWebpackPlugin({
+    template: "src/index.html",
+  }),
+];
+
 if (process.env.NODE_ENV === "production") {
   mode = "production";
+} else {
+  babelPlugins.push("react-refresh/babel");
+  webpackPlugins.push(new ReactRefreshWebpackPlugin());
 }
 
 module.exports = {
@@ -15,6 +28,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     assetModuleFilename: "images/[hash][ext][query]",
     clean: true,
+    // asyncChunks: true,
   },
 
   mode: mode,
@@ -37,7 +51,11 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [["@babel/preset-env", { targets: "defaults" }]],
+            presets: [
+              ["@babel/preset-env", { targets: "defaults" }],
+              ["@babel/preset-react", { runtime: "automatic" }],
+            ],
+            plugins: babelPlugins,
           },
         },
       },
@@ -55,13 +73,7 @@ module.exports = {
     ],
   },
 
-  plugins: [
-    new MiniCssExtractPlugin(),
-    new HtmlWebpackPlugin({
-      // filename: "index.html",
-      template: "src/index.html",
-    }),
-  ],
+  plugins: webpackPlugins,
 
   // devtool: "source-map",
 
@@ -75,6 +87,6 @@ module.exports = {
     },
     compress: true,
     port: 9000,
-    // hot: true,
+    hot: true,
   },
 };

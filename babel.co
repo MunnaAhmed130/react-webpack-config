@@ -29,5 +29,6 @@
         // "importSource": "custom-jsx-library"
       }
     ]
-  ]
+  ],
+  "plugins": ["react-refresh/babel"]
 }
