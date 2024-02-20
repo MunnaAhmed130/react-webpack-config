@@ -18,11 +18,23 @@ if (process.env.NODE_ENV === "production") {
   mode = "production";
 } else {
   babelPlugins.push("react-refresh/babel");
+}
+
+if (process.env.SERVE) {
   webpackPlugins.push(new ReactRefreshWebpackPlugin());
 }
 
 module.exports = {
   entry: "./src/index.js",
+
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "dist"),
+    },
+    compress: true,
+    port: 9000,
+    hot: true,
+  },
 
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -79,14 +91,5 @@ module.exports = {
 
   resolve: {
     extensions: [".js", ".json", ".jsx"],
-  },
-
-  devServer: {
-    static: {
-      directory: path.join(__dirname, "dist"),
-    },
-    compress: true,
-    port: 9000,
-    hot: true,
   },
 };

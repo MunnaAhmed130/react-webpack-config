@@ -9,7 +9,7 @@ const App = () => {
       <section className="hero"></section>
       <main>
         <section>
-          <h1>React webpack </h1>
+          <h1>React webpack</h1>
         </section>
 
         {/* <img src={sword} alt="sword png" width="250" />
